@@ -6,7 +6,7 @@ use rand::rngs::ThreadRng;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::fs;
-use std::os::unix::process::parent_id;
+
 use std::str::FromStr;
 use std::time::Duration;
 use strum_macros::EnumString;
@@ -139,7 +139,7 @@ impl Sensor {
     }
 
     pub fn inspect_particle(&self, particle: &SimulationParticle) {
-        // println!("Sensor {} detected particle: {:?}", self.label, particle);
+         println!("Sensor {} detected particle: {:?}", self.label, particle);
     }
 }
 

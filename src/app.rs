@@ -1,7 +1,6 @@
 use crate::gfx::renderer::Renderer;
 use std::time::{Duration, Instant};
 use winit::dpi::{PhysicalPosition, PhysicalSize};
-use winit::platform::unix::WindowBuilderExtUnix;
 use winit::{
     event::*,
     event_loop::{ControlFlow, EventLoop},
@@ -27,7 +26,6 @@ pub async fn run<A: App>() {
     let event_loop = EventLoop::new();
 
     let window = WindowBuilder::new()
-        .with_class(window_instance, window_class)
         .build(&event_loop)
         .unwrap();
 

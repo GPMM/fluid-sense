@@ -1,34 +1,22 @@
-#########
-#......!#
-#.......#
-#.@.....#
-#.......#
-#......$#
-#########
+############
+#..........#
+#..........#
+#.@.....$.V#
+#..........#
+#..........#
+############
 ---
 {
  "actuators": [
  {
-    "label": "!",
-    "height": 1.5,
-    "direction": [-1.0, 0.0, 1.0],
-    "initial_velocity": 5.0,
-    "range": [0.2, 0.2, 0.2],
-    "fluid_type": "Gaseous",
-    "interval": 0.05,
-    "particle": {
-        "size": 0.2,
-        "color": [0.0, 0.0, 1.0]
-    }
- },
- {
      "label": "$",
-     "height": 1.5,
-     "direction": [-1.0, 0.0, -1.0],
+     "height": 1,
+     "direction": [1.0, 0.0, 0.0],
      "initial_velocity": 5.0,
-     "range": [0.2, 0.2, 0.2],
+     "range": [0.1, 0.1, 0.05],
      "fluid_type": "Gaseous",
      "interval": 0.05,
+     "temperature": 65,
      "particle": {
          "size": 0.2,
          "color": [1.0, 0.0, 0.0]
@@ -37,9 +25,10 @@
  ],
  "sensors": [
  {
-    "label": "$",
+    "label": "V",
     "height": 1.0,
-    "range": [10.0, 1.0, 1.0],
+    "range": [1.0, 50.0, 1.0],
+    "position": [51, 1.0, 50.0],
     "output": "nomedoarquivo.csv"
  }
  ]
