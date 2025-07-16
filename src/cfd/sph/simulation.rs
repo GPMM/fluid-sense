@@ -14,7 +14,7 @@ pub struct SimulationParticle {
     forces: Vec3,
     density: f32,
     density_correction: f32,
-    temperature: f32,
+    pub(crate) temperature: f32,
     fluid_type: FluidType,
     color: Vec3,
 }
