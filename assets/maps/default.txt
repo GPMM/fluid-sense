@@ -13,7 +13,7 @@
      "height": 1,
      "direction": [1.0, 0.0, 0.0],
      "initial_velocity": 5.0,
-     "range": [0.1, 0.1, 0.05],
+     "range": [0.2, 0.2, 0.2],
      "fluid_type": "Gaseous",
      "interval": 0.05,
      "temperature": 65,

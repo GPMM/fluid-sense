@@ -23,6 +23,8 @@ use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::fs::File;
+use std::process;
+use std::path::Path;
 use std::time::{Instant, Duration};
 use std::cmp::{min, max};
 use winit::event::{ElementState, KeyboardInput, WindowEvent};
@@ -184,24 +186,24 @@ impl App for FluidSense {
         let sensors = world_map.get_sensors();
         
         let mut timer = 0.0;
-        let mut counter = 0;
+        let mut counter = 1;
 
         let count = Column::new("Count".into(), [0]);
-        let a1 = Column::new("A1".into(), [22.0 as f32]);
-        let a2 = Column::new("A2".into(), [22.0 as f32]);
-        let a3 = Column::new("A3".into(), [22.0 as f32]);
-        let a4 = Column::new("A4".into(), [22.0 as f32]);
+        let a1 = Column::new("A1".into(), [22.2 as f32]);
+        let a2 = Column::new("A2".into(), [22.2 as f32]);
+        let a3 = Column::new("A3".into(), [21.9 as f32]);
+        let a4 = Column::new("A4".into(), [21.6 as f32]);
         let a5 = Column::new("A5".into(), [22.0 as f32]);
-        let a6 = Column::new("A6".into(), [22.0 as f32]);
-        let a7 = Column::new("A7".into(), [22.0 as f32]);
-        let a8 = Column::new("A8".into(), [22.0 as f32]);
-        let a9 = Column::new("A9".into(), [22.0 as f32]);
-        let a10 = Column::new("A10".into(), [22.0 as f32]);
-        let a11 = Column::new("A11".into(), [22.0 as f32]);
-        let a12 = Column::new("A12".into(), [22.0 as f32]);
-        let a13 = Column::new("A13".into(), [22.0 as f32]);
-        let a14 = Column::new("A14".into(), [22.0 as f32]);
-        let a15 = Column::new("A15".into(), [22.0 as f32]);
+        let a6 = Column::new("A6".into(), [22.3 as f32]);
+        let a7 = Column::new("A7".into(), [22.3 as f32]);
+        let a8 = Column::new("A8".into(), [22.4 as f32]);
+        let a9 = Column::new("A9".into(), [22.1 as f32]);
+        let a10 = Column::new("A10".into(), [22.2 as f32]);
+        let a11 = Column::new("A11".into(), [22.4 as f32]);
+        let a12 = Column::new("A12".into(), [22.4 as f32]);
+        let a13 = Column::new("A13".into(), [22.2 as f32]);
+        let a14 = Column::new("A14".into(), [22.2 as f32]);
+        let a15 = Column::new("A15".into(), [22.3 as f32]);
         let df =  DataFrame::new(vec![count,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15]);
 
         Self {
@@ -300,89 +302,88 @@ impl App for FluidSense {
                             for sensor in sensors {
                                 //sensor.inspect_particle(particle);
                                 
-                                if particle.position.z >= 3.05 && particle.position.z < 3.35
+                                if particle.position.z >= 2.495 && particle.position.z < 3.165
                                 {
                                     //println!("Sensor A1, A4, A7, A10, A13");
-                                    if particle.position.y >= 0.85 && particle.position.y < 1.15 //A1
+                                    if particle.position.y >= 0.665 && particle.position.y < 1.335 //A1
                                     {
                                         if A1 == 22.0 { A1 = particle.temperature; }
                                         else { A1 = (A1 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.15 && particle.position.y < 1.45 //A4
+                                    else if particle.position.y >= 1.335 && particle.position.y < 2.005 //A4
                                     {
                                         if A4 == 22.0 { A4 = particle.temperature; }
                                         else { A4 = (A4 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.45 && particle.position.y < 1.75 //A7
+                                    else if particle.position.y >= 2.005 && particle.position.y < 2.675 //A7
                                     {
                                         if A7 == 22.0 { A7 = particle.temperature; }
                                         else { A7 = (A7 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.75 && particle.position.y < 2.05 //A10
+                                    else if particle.position.y >= 2.675 && particle.position.y < 3.345 //A10
                                     {
                                         if A10 == 22.0 { A10 = particle.temperature; }
                                         else { A10 = (A10 + particle.temperature)/2.0; }
                                     } 
-                                    else if particle.position.y >= 2.05 && particle.position.y < 2.35 //A13
+                                    else if particle.position.y >= 3.345 && particle.position.y < 4.015 //A13
                                     {
                                         if A13 == 22.0 { A13 = particle.temperature; }
                                         else { A13 = (A13 + particle.temperature)/2.0; }
                                     }      
                                 }
-                                else if particle.position.z >= 3.35 && particle.position.z < 3.65
+                                else if particle.position.z >= 3.165 && particle.position.z < 3.835
                                 {
                                     //println!("Sensor A3, A5, A8, A11, A14");
-                                    if particle.position.y >= 0.85 && particle.position.y < 1.15 //A3
+                                    if particle.position.y >= 0.665 && particle.position.y < 1.335 //A3
                                     {
                                         if A3 == 22.0 { A3 = particle.temperature; }
                                         else { A3 = (A3 + particle.temperature)/2.0; }
-                                        println!("Sensor A3: {}", A3);
                                     }
-                                    else if particle.position.y >= 1.15 && particle.position.y < 1.45 //A5
+                                    else if particle.position.y >= 1.335 && particle.position.y < 2.005 //A5
                                     {
                                         if A5 == 22.0 { A5 = particle.temperature; }
                                         else { A5 = (A5 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.45 && particle.position.y < 1.75 //A8
+                                    else if particle.position.y >= 2.005 && particle.position.y < 2.675 //A8
                                     {
                                         if A8 == 22.0 { A8 = particle.temperature; }
                                         else { A8 = (A8 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.75 && particle.position.y < 2.05 //A11
+                                    else if particle.position.y >= 2.675 && particle.position.y < 3.345 //A11
                                     {
                                         if A11 == 22.0 { A11 = particle.temperature; }
                                         else { A11 = (A11 + particle.temperature)/2.0; }
                                     } 
-                                    else if particle.position.y >= 2.05 && particle.position.y < 2.35 //A14
+                                    else if particle.position.y >= 3.345 && particle.position.y < 4.015 //A14
                                     {
                                         if A14 == 22.0 { A14 = particle.temperature; }
                                         else { A14 = (A14 + particle.temperature)/2.0; }
                                     }  
                                 }
-                                else if particle.position.z >= 3.65 && particle.position.z < 3.95
+                                else if particle.position.z >= 3.835 && particle.position.z < 4.505
                                 {
                                     //println!("Sensor A2, A6, A9, A12, A15");
-                                    if particle.position.y >= 0.85 && particle.position.y < 1.15 //A2
+                                    if particle.position.y >= 0.665 && particle.position.y < 1.335 //A2
                                     {
                                         if A2 == 22.0 { A2 = particle.temperature; }
                                         else { A2 = (A2 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.15 && particle.position.y < 1.45 //A6
+                                    else if particle.position.y >= 1.335 && particle.position.y < 2.005 //A6
                                     {
                                         if A6 == 22.0 { A6 = particle.temperature; }
                                         else { A6 = (A6 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.45 && particle.position.y < 1.75 //A9
+                                    else if particle.position.y >= 2.005 && particle.position.y < 2.675 //A9
                                     {
                                         if A9 == 22.0 { A9 = particle.temperature; }
                                         else { A9 = (A9 + particle.temperature)/2.0; }
                                     }
-                                    else if particle.position.y >= 1.75 && particle.position.y < 2.05 //A12
+                                    else if particle.position.y >= 2.675 && particle.position.y < 3.345 //A12
                                     {
                                         if A12 == 22.0 { A12 = particle.temperature; }
                                         else { A12 = (A12 + particle.temperature)/2.0; }
                                     } 
-                                    else if particle.position.y >= 2.05 && particle.position.y < 2.35 //A15
+                                    else if particle.position.y >= 3.345 && particle.position.y < 4.015 //A15
                                     {
                                         if A15 == 22.0 { A15 = particle.temperature; }
                                         else { A15 = (A15 + particle.temperature)/2.0; }
@@ -394,7 +395,7 @@ impl App for FluidSense {
                 }
                 
                 let tabela = self.df.clone().unwrap();
-                let id_count = self.counter as usize;
+                let id_count = (self.counter - 1) as usize;
                 
                 //A1
                     let coluna1 = tabela.column("A1").unwrap();
@@ -405,7 +406,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A1 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A1 * config.thermal_conductivity))));
-                    println!("Teste Calculo A1 :\n{}", a1_val); }
+                   //println!("Teste Calculo A1 :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a1 = Series::new("A1".into(), &[a1_val as f32]);
                 //A2
@@ -417,7 +419,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A2 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A2 * config.thermal_conductivity))));
-                    println!("Teste Calculo A2 :\n{}", a1_val); }
+                   //println!("Teste Calculo A2 :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a2 = Series::new("A2".into(), &[a1_val as f32]);
                 //A3
@@ -429,7 +432,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A3 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A3 * config.thermal_conductivity))));
-                    println!("Teste Calculo A3 :\n{}", a1_val); }
+                   //println!("Teste Calculo A3 :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a3 = Series::new("A3".into(), &[a1_val as f32]);
                 //A4
@@ -441,7 +445,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A4 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A4 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a4 = Series::new("A4".into(), &[a1_val as f32]);
                 //A5
@@ -453,7 +458,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A5 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A5 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a5 = Series::new("A5".into(), &[a1_val as f32]);
                 //A6
@@ -465,7 +471,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A6 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A6 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a6 = Series::new("A6".into(), &[a1_val as f32]);
                 //A7
@@ -477,7 +484,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A7 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A7 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a7 = Series::new("A7".into(), &[a1_val as f32]);
                 //A8
@@ -489,7 +497,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A8 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A8 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a8 = Series::new("A8".into(), &[a1_val as f32]);
                 //A9
@@ -501,7 +510,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A9 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A9 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a9 = Series::new("A9".into(), &[a1_val as f32]);
                 //A10
@@ -513,7 +523,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A10 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A10 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a10 = Series::new("A10".into(), &[a1_val as f32]);
                 //A11
@@ -525,7 +536,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A11 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A11 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a11 = Series::new("A11".into(), &[a1_val as f32]);
                 //A12
@@ -537,7 +549,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A12 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A12 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a12 = Series::new("A12".into(), &[a1_val as f32]);
                 //A13
@@ -549,7 +562,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A13 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A13 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a13 = Series::new("A13".into(), &[a1_val as f32]);
                 //A14
@@ -561,7 +575,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A14 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A14 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a14 = Series::new("A14".into(), &[a1_val as f32]);
                 //A15
@@ -573,7 +588,8 @@ impl App for FluidSense {
                     let mut a1_val = 0 as f32;
                     if A15 != 22.0
                     { a1_val = f32::max(22.0,( (((1.0 - config.thermal_conductivity) * val_f32) + (A15 * config.thermal_conductivity))));
-                    println!("Teste Calculo :\n{}", a1_val); }
+                   //println!("Teste Calculo :\n{}", a1_val); 
+                    }
                     else { a1_val = val_f32; }
                     let nova_a15 = Series::new("A15".into(), &[a1_val as f32]);
 
@@ -594,14 +610,14 @@ impl App for FluidSense {
                 df_teste.with_column(nova_a14);
                 df_teste.with_column(nova_a15);
 
-                println!("\n Nova Linha:\n{:?}", df_teste);
+                //println!("\n Nova Linha:\n{:?}", df_teste);
                 
                 
                 self.counter +=1;
-                println!("Conter: {}", self.counter);
+                //println!("Conter: {}", self.counter);
                 let newdf = self.df.clone().unwrap();
                 self.df = newdf.vstack(&df_teste);
-                println!("\nDataFrame atualizado:\n{:?}", self.df);
+                //println!("\nDataFrame atualizado:\n{:?}", self.df);
                 self.timer = 0.0;
             }
         }
@@ -611,9 +627,22 @@ impl App for FluidSense {
             let mut df_export = self.df.unwrap();
             CsvWriter::new(arquivo).has_header(true).with_delimiter(',').finish(&df_export)?;*/
             let mut df_export = self.df.clone().unwrap();
-            let mut file = std::fs::File::create("saida.csv").unwrap();
-            CsvWriter::new(&mut file).finish(&mut df_export).unwrap();
             
+            let mut counter_name = 1;
+            let mut ver = 0;
+            let mut file_name : String  = ("saida.csv").to_string(); 
+            /*while ver == 0 {
+                file_name = (("saida").to_string() + &counter_name.to_string() + (".csv"));
+                
+                if !Path::new(&file_name).exists()
+                { ver = 1; }
+                else  { counter_name += 1; }
+
+            }*/
+            let mut file = std::fs::File::create(file_name).unwrap();
+
+            CsvWriter::new(&mut file).finish(&mut df_export).unwrap();
+            process::exit(1);
             self.counter +=1;
         }
     }
