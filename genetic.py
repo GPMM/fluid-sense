@@ -29,6 +29,16 @@ def avaliar(ind):
     
     sm_df = pd.read_csv("saida.csv")
 
+    concat_experimento = pd.concat([og_df['A1'], og_df['A2'], og_df['A3'],og_df['A4'], og_df['A5'],
+                                    og_df['A6'], og_df['A7'], og_df['A8'],og_df['A9'], og_df['A10'],
+                                    og_df['A11'], og_df['A12'], og_df['A13'],og_df['A14'], og_df['A15']], ignore_index=True)
+
+    concat_simulacao = pd.concat([sm_df['A1'], sm_df['A2'], sm_df['A3'], sm_df['A4'], sm_df['A5'],
+                                    sm_df['A6'], sm_df['A7'], sm_df['A8'], sm_df['A9'], sm_df['A10'],
+                                    sm_df['A11'], sm_df['A12'], sm_df['A13'],sm_df['A14'], sm_df['A15']], ignore_index=True)
+    a = sc.stats.pearsonr(concat_experimento,concat_simulacao).statistic
+    return a
+    '''
     a1 = (sc.stats.pearsonr(og_df["A1"],sm_df["A1"]).statistic)
     a2 = (sc.stats.pearsonr(og_df["A2"],sm_df["A2"]).statistic)
     a3 = (sc.stats.pearsonr(og_df["A3"],sm_df["A3"]).statistic)
@@ -53,6 +63,7 @@ def avaliar(ind):
     #print("Media Correlação: ")
     #print(a)
     return a
+    '''
 
 with open('./assets/config.json',"r") as tst:
     parametros = json.load(tst)
@@ -87,8 +98,9 @@ def selecionar(populacao, fitnesses, n):
     selecionados = [ind for ind, fit in ordenados[:n]]
     return selecionados
 
-def algoritmo_genetico(base_individuo, tamanho_pop=6, geracoes=2):
+def algoritmo_genetico(base_individuo, tamanho_pop=4, geracoes=2):
     populacao = [mutar(base_individuo, taxa_mutacao=1.0, intensidade_mutacao=0.5) for _ in range(tamanho_pop)]
+    df_grafico = pd.DataFrame(data = {"geracao": [0], "avaliacao": [0.0]}, columns=["geracao","avaliacao"])
 
     for geracao in range(geracoes):
         fitnesses = [avaliar(ind) for ind in populacao]
@@ -110,10 +122,15 @@ def algoritmo_genetico(base_individuo, tamanho_pop=6, geracoes=2):
 
         melhor_fitness = max(fitnesses)
         print(f'Geração {geracao + 1} - Melhor fitness: {melhor_fitness:.4f}')
+        df_grafico_aux = pd.DataFrame(data = {"geracao": [geracao + 1], "avaliacao": [melhor_fitness]}, columns=["geracao","avaliacao"])
+        df_grafico = pd.concat([df_grafico,df_grafico_aux])
 
     # Melhor solução final
     fitnesses = [avaliar(ind) for ind in populacao]
     melhor_individuo = populacao[fitnesses.index(max(fitnesses))]
+    plt.plot(df_grafico['geracao'], df_grafico['avaliacao'], color='red', alpha=0.5, linewidth=0.9)
+    plt.ylim(0.95, 1)
+    plt.savefig('figure.png')
     return melhor_individuo
 
 
