@@ -23,47 +23,22 @@ def avaliar(ind):
     with open('./assets/config.json',"x") as tst:
         json.dump(ind,tst)
 
+    xyz = 0.0
     os.system("cargo run")
-    while not os.path.exists(file_path):
-        xyz = 1
-    
-    sm_df = pd.read_csv("saida.csv")
+    if os.path.exists(file_path):
+        sm_df = pd.read_csv("saida.csv")
 
-    concat_experimento = pd.concat([og_df['A1'], og_df['A2'], og_df['A3'],og_df['A4'], og_df['A5'],
-                                    og_df['A6'], og_df['A7'], og_df['A8'],og_df['A9'], og_df['A10'],
-                                    og_df['A11'], og_df['A12'], og_df['A13'],og_df['A14'], og_df['A15']], ignore_index=True)
+        concat_experimento = pd.concat([og_df['A1'], og_df['A2'], og_df['A3'],og_df['A4'], og_df['A5'],
+                                        og_df['A6'], og_df['A7'], og_df['A8'],og_df['A9'], og_df['A10'],
+                                        og_df['A11'], og_df['A12'], og_df['A13'],og_df['A14'], og_df['A15']], ignore_index=True)
 
-    concat_simulacao = pd.concat([sm_df['A1'], sm_df['A2'], sm_df['A3'], sm_df['A4'], sm_df['A5'],
-                                    sm_df['A6'], sm_df['A7'], sm_df['A8'], sm_df['A9'], sm_df['A10'],
-                                    sm_df['A11'], sm_df['A12'], sm_df['A13'],sm_df['A14'], sm_df['A15']], ignore_index=True)
-    a = sc.stats.pearsonr(concat_experimento,concat_simulacao).statistic
-    return a
-    '''
-    a1 = (sc.stats.pearsonr(og_df["A1"],sm_df["A1"]).statistic)
-    a2 = (sc.stats.pearsonr(og_df["A2"],sm_df["A2"]).statistic)
-    a3 = (sc.stats.pearsonr(og_df["A3"],sm_df["A3"]).statistic)
-    a4 = (sc.stats.pearsonr(og_df["A4"],sm_df["A4"]).statistic)
-    a5 = (sc.stats.pearsonr(og_df["A5"],sm_df["A5"]).statistic)
-    a6 = (sc.stats.pearsonr(og_df["A6"],sm_df["A6"]).statistic)
-    a7 = (sc.stats.pearsonr(og_df["A7"],sm_df["A7"]).statistic)
-    a8 = (sc.stats.pearsonr(og_df["A8"],sm_df["A8"]).statistic)
-    a9 = (sc.stats.pearsonr(og_df["A9"],sm_df["A9"]).statistic)
-    a10 = (sc.stats.pearsonr(og_df["A10"],sm_df["A10"]).statistic)
-    a11 = (sc.stats.pearsonr(og_df["A11"],sm_df["A11"]).statistic)
-    a12 = (sc.stats.pearsonr(og_df["A12"],sm_df["A12"]).statistic)
-    a13 = (sc.stats.pearsonr(og_df["A13"],sm_df["A13"]).statistic)
-    a14 = (sc.stats.pearsonr(og_df["A14"],sm_df["A14"]).statistic)
-    a15 = (sc.stats.pearsonr(og_df["A15"],sm_df["A15"]).statistic)
-
-    a = (np.nan_to_num(a1) + np.nan_to_num(a2) + np.nan_to_num(a3) + np.nan_to_num(a4) +np.nan_to_num(a5) + 
-        np.nan_to_num(a6) + np.nan_to_num(a7) + np.nan_to_num(a8) + np.nan_to_num(a9) +np.nan_to_num(a10) +
-        np.nan_to_num(a11) + np.nan_to_num(a12) + np.nan_to_num(a13) + np.nan_to_num(a14) +np.nan_to_num(a15))/(np.nan_to_num(max(a1,1)) + np.nan_to_num(max(a2,1)) + np.nan_to_num(max(a3,1)) + np.nan_to_num(max(a4,1)) + np.nan_to_num(max(a5,1)) +
-        np.nan_to_num(max(a6,1)) + np.nan_to_num(max(a7,1)) + np.nan_to_num(max(a8,1)) + np.nan_to_num(max(a9,1)) + np.nan_to_num(max(a10,1)) +
-        np.nan_to_num(max(a11,1)) + np.nan_to_num(max(a12,1)) + np.nan_to_num(max(a13,1)) + np.nan_to_num(max(a14,1)) + np.nan_to_num(max(a15,1)))
-    #print("Media Correlação: ")
-    #print(a)
-    return a
-    '''
+        concat_simulacao = pd.concat([sm_df['A1'], sm_df['A2'], sm_df['A3'], sm_df['A4'], sm_df['A5'],
+                                        sm_df['A6'], sm_df['A7'], sm_df['A8'], sm_df['A9'], sm_df['A10'],
+                                        sm_df['A11'], sm_df['A12'], sm_df['A13'],sm_df['A14'], sm_df['A15']], ignore_index=True)
+        a = sc.stats.pearsonr(concat_experimento,concat_simulacao).statistic
+        return a
+    else:
+        return 0
 
 with open('./assets/config.json',"r") as tst:
     parametros = json.load(tst)
@@ -98,21 +73,18 @@ def selecionar(populacao, fitnesses, n):
     selecionados = [ind for ind, fit in ordenados[:n]]
     return selecionados
 
-def algoritmo_genetico(base_individuo, tamanho_pop=4, geracoes=2):
+def algoritmo_genetico(base_individuo, tamanho_pop=4, geracoes=5):
     populacao = [mutar(base_individuo, taxa_mutacao=1.0, intensidade_mutacao=0.5) for _ in range(tamanho_pop)]
-    df_grafico = pd.DataFrame(data = {"geracao": [0], "avaliacao": [0.0]}, columns=["geracao","avaliacao"])
+    df_grafico = pd.DataFrame(data = {"geracao": [0], "avaliacao": [0.9]}, columns=["geracao","avaliacao"])
 
+    melhor_ger = 0
     for geracao in range(geracoes):
         fitnesses = [avaliar(ind) for ind in populacao]
-        melhores = selecionar(populacao, fitnesses, n=int(tamanho_pop / 2))
+        melhores = selecionar(populacao, fitnesses, n=2)
 
-        print("Geracao")
-        print(geracao)
-        print(melhores)
         # Nova população: elite + filhos cruzados
         nova_populacao = copy.deepcopy(melhores)
         while len(nova_populacao) < tamanho_pop:
-
             pai1, pai2 = random.sample(melhores, 2)
             filho = crossover(pai1, pai2)
             filho = mutar(filho, taxa_mutacao=0.5, intensidade_mutacao=0.05)

@@ -4,6 +4,7 @@ use glam::Vec3;
 use std::collections::LinkedList;
 use std::time::Duration;
 use rayon::prelude::*;
+use std::process;
 use crate::scene::world_map::FluidType;
 
 #[derive(Debug)]
@@ -84,6 +85,10 @@ impl SPH {
     }
 
     pub fn remove_particle(&mut self, index: usize) {
+        if index >= self.particles.len() || index >= self.instances.len() {
+            eprintln!("Erro: índice fora dos limites. Encerrando o programa.");
+            process::exit(1);
+        }
         self.particles.remove(index);
         self.instances.remove(index);
     }

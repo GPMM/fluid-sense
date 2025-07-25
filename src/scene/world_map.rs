@@ -306,8 +306,8 @@ impl WorldMap {
     pub fn get_tile_in_position(&self, position: Vec3) -> &Tile {
         let (x, z) = ((position.x) as usize, (position.z) as usize);
 
-        if z <= self.tiles.len() {
-            if x <= self.tiles[z].len() {
+        if z < self.tiles.len() {
+            if x < self.tiles[z].len() {
                 let tile = &self.tiles[z][x];
 
                 return match tile {
