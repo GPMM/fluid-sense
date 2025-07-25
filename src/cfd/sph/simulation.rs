@@ -12,7 +12,7 @@ pub struct SimulationParticle {
     forces: Vec3,
     density: f32,
     density_correction: f32,
-    temperature: f32,
+    pub temperature: f32,
     fluid_type: FluidType,
     size: f32,
     color: Vec3,

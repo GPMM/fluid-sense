@@ -11,6 +11,7 @@ opt-level = 3
 
 [dependencies]
 rand = "0.8.5"
+polars = { version = "0.48", features = ["lazy", "csv"] }
 glam = { version = "0.21", features = ["bytemuck", "serde"] }
 winit = "0.26"
 env_logger = "0.9"
