@@ -960,7 +960,7 @@ fn run_headless() {
                 
                 
                 counter +=1;
-                println!("Conter: {}", counter);
+                //println!("Conter: {}", counter);
                 let newdf = df.clone().unwrap();
                 df = newdf.vstack(&df_teste);
                 //println!("\nDataFrame atualizado:\n{:?}", self.df);

@@ -1,0 +1,23 @@
+{actuators: {a: {direction: [1.0, 0.0, 0.0], fluid_type: Gaseous, height: 1, initial_velocity: 5.0,
+      interval: 0.05, particle: {color: [0.0, 0.0, 1.0], size: 0.02}, range: [0.2,
+        0.2, 0.2], temperature: 65.0}}, environment: '############
+
+    #..........#
+
+    #..........#
+
+    #.@.....a.V#
+
+    #..........#
+
+    #..........#
+
+    ############
+
+    ', sensors: {V: {height: 1.0, output: nomedoarquivo.csv, range: [1.0, 50.0, 1.0]}},
+  simulation: {buoyancy_coefficient: 0.43042618850131253, buoyancy_direction: [0.0,
+      1.0, 0.0], damping_coefficient: 199.7124693697632, damping_threshold: 1.7073760940570297,
+    gas_constant: 5.840156182754598, gravity: [0.0, -9.82, 0.0], mass: 0.020902326424117542,
+    radiation_half_life: 1999.8273497248485, radius: 0.7748067605499294, rest_density: 1.7855621085079418,
+    small_positive: 0.6704712105441784, step: 0.5531593824197758, thermal_conductivity: 0.008769347902601837,
+    virtual_particle: [0.0, 0.01828, 0.0], viscosity: 0.0713077456960264}}
